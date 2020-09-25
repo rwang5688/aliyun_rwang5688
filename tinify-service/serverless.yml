@@ -1,0 +1,40 @@
+service: tinify-service # Your service name which you entered with sls create command
+frameworkVersion: ">=1.30.0"
+plugins:
+  - serverless-aliyun-function-compute
+  - serverless-dotenv-plugin
+custom:
+  accountid: ${env:ALIYUN_ACCOUNT_ID}
+  cloud: ${env:TARGET_CLOUD}
+  region: ${env:TARGET_REGION}
+  bucket: ${env:TINIFY_SERVICE_DATA_BUCKET}
+  dotenv:
+    path: ../.env
+
+package:
+ exclude:
+    - package-lock.json
+    - .gitignore
+    - .git/**
+
+provider:
+  name: aliyun
+  runtime: nodejs8
+  region: ${env:TARGET_REGION}
+  credentials: ./aliyun-admin_credentials # path must be absolute
+
+functions:
+  objectEvent:  # name of your Function
+    handler: index.osseventtrigger  #name of the exported function
+    environment:
+      TINIFY_API_KEY: ${env:TINIFY_API_KEY}
+    events:
+      - oss:
+          sourceArn: acs:oss:${self:custom.region}:${self:custom.accountid}:${self:custom.bucket}
+          triggerConfig:
+            events:
+              - oss:ObjectCreated:*
+            filter:
+              key:
+                prefix: source/
+
