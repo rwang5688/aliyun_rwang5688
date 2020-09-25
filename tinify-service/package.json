@@ -1,0 +1,22 @@
+{
+  "name": "tinify-service",
+  "version": "1.0.0",
+  "description": "tinify-service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tinify"
+  ],
+  "author": "rwang5688@outlook.com",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-aliyun-function-compute": "^1.2.6",
+    "serverless-dotenv-plugin": "^3.0.0"
+  },
+  "dependencies": {
+    "ali-oss": "^6.10.0",
+    "tinify": "^1.6.0-beta.2"
+  }
+}
