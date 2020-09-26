@@ -1,6 +1,6 @@
 const oss = require('ali-oss');
 const tinify = require('tinify');
-
+tinify.key = process.env.TINIFY_API_KEY;
 
 function osseventtrigger(eventBuf, ctx, callback) {
     'use strict';
@@ -34,7 +34,6 @@ function osseventtrigger(eventBuf, ctx, callback) {
         console.log(ossEvent.oss.object.key);
         // Read object from buffer
         // Call tinify API to compress the image
-        tinify.key = process.env.TINIFY_API_KEY;
         console.log('tinify API key: ', tinify.key);
         tinify.fromBuffer(val.content).toBuffer(function (err, resultData) {
             if (err) {
